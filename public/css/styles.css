@@ -1,6 +1,160 @@
+:root {
+  --font-color: #232023;
+  --accent-color: #C8D746;
+  --background-color: white;
+}
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+body {
+  font-family: Figtree, sans-serif;
+  color: var(--font-color);
+  margin: 0;
+}
+
+#tools a {
+  text-decoration: none;
+  color: var(--font-color);
+  font-variant: small-caps;
+  font-size: 1.2rem;
+}
+
+#tools a:hover {
+  color: rgba(35, 32, 35, 0.8);
+  text-decoration: underline;
+}
+
+#wrapper {
+  background-color: var(--background-color);
+  padding: 1rem;
+}
+
+/* Start of Header styles */
+#header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.siteName {
+  font-family: "Prosto One", sans-serif;
+  font-size: 2.5rem;
+}
+
+.siteName a {
+  text-decoration: none;
+  color: var(--font-color);
+}
+
+/* Start of Navigation styles */
+nav {
+  background-color: var(--font-color);
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: space-around;
+  color: white;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+}
+
+nav ul li a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* Start of Hero section styles */
+.hero-image {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.hero-image img {
+  width: 100%;
+}
+
+.hero-image article {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  max-width: 200px;
+  font-size: 1.1rem;
+}
+
+.hero-image article h2,
+.hero-image article p {
+  margin: 0;
+}
+
+.hero-image .own-today {
+  width: 60%;
+  margin: 1rem 0;
+}
+
+/* Start of Reviews styles */
+.reviews ul li {
+  line-height: 1.5;
+}
+
+/* Start of Upgrades styles */
+.upgrades-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+
+.upgrade-item {
+  background-color: var(--accent-color);
+  padding: 1rem;
+}
+
+.upgrades-layout img {
+  height: 50px;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    background-image: url("/images/site/small_check.jpg");
+  }
+
+  #wrapper {
+    max-width: 800px;
+    margin: 2rem auto;
+    border: 5px solid var(--accent-color);
+    border-radius: 10px;
+  }
+
+  .hero-image {
+    margin: 2rem 0;
+  }
+
+  #content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .reviews ul {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+  }
 }
