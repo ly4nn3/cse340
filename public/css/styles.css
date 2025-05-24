@@ -131,6 +131,58 @@ nav ul li a:hover {
   object-fit: cover;
 }
 
+/* Start of Detail View styles */
+.vehicle-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.vehicle-detail img {
+  max-width: 100%;
+  height: auto;
+}
+
+.vehicle-info h2 {
+  text-decoration: underline;
+  text-underline-offset: 0.5rem;
+  margin-bottom: 1.3rem;
+}
+
+.vehicle-info {
+  padding: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.vehicle-price,
+.vehicle-miles {
+  width: 100%;
+  background-color: rgba(200, 215, 70, 0.7);
+  padding: 1rem 0.5rem;
+}
+
+.vehicle-description,
+.vehicle-color {
+  padding: 0.5rem;
+}
+
+.vehicle-info .label {
+  font-weight: bold;
+}
+
+.vehicle-price {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
+.vehicle-description {
+  line-height: 1.5;
+}
+
 @media screen and (min-width: 768px) {
   body {
     background-image: url("/images/site/small_check.jpg");
@@ -156,5 +208,21 @@ nav ul li a:hover {
   .reviews ul {
     display: grid;
     grid-template-rows: repeat(5, 1fr);
+  }
+
+  .vehicle-detail {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .vehicle-detail img {
+    flex: 1;
+    max-width: 50%;
+    object-fit: contain;
+  }
+
+  .vehicle-info {
+    flex: 1;
   }
 }
