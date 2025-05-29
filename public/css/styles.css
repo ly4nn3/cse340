@@ -52,6 +52,12 @@ body {
   color: var(--font-color);
 }
 
+.notice {
+  color: red;
+  font-style: italic;
+  font-weight: bold;
+}
+
 /* Start of Navigation styles */
 nav {
   background-color: var(--font-color);
