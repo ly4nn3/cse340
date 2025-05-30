@@ -5,9 +5,8 @@
     res.redirect('/')
 } %>
 
-<!-- Message display for any errors
- Commented out for now -->
-<%# messages() %>
+<!-- Message display -->
+<%- messages() %>
 
 <div class="login">
     <form id="loginForm" action="/account/login" method="post">
