@@ -303,6 +303,13 @@ nav ul li a:hover {
   color: var(--background-color);
 }
 
+.register p {
+  font-variant: small-caps;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
 .account-register {
   text-align: center;
 }
