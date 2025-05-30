@@ -14,6 +14,7 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities")
 const errorRoute = require("./routes/errorRoute")
 
@@ -50,6 +51,8 @@ app.set("layout", "./layouts/layout")
 app.use(static)
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
+// Account routes
+app.use("/account", accountRoute)
 // Inventory routes
 app.use("/inv", inventoryRoute)
 app.use("/error", errorRoute)
