@@ -53,7 +53,7 @@ body {
 }
 
 .notice {
-  color: red;
+  color: rgb(165, 0, 0);
   font-style: italic;
   font-weight: bold;
 }
@@ -274,11 +274,13 @@ nav ul li a:hover {
 .login input:valid,
 .register input:valid {
   border-left: 5px solid green;
+  background-color: rgb(237, 255, 210);
 }
 
 .login input:invalid,
 .register input:invalid {
   border-left: 5px solid red;
+  background: rgb(255, 208, 208);
 }
 
 .login button,
@@ -303,6 +305,10 @@ nav ul li a:hover {
 
 .account-register {
   text-align: center;
+}
+
+.account-register a:visited {
+  color: var(--font-color);
 }
 
 .password-container {

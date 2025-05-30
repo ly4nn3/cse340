@@ -20,11 +20,11 @@
         <input type="email" id="account_email" name="account_email" required>
 
         <label for="account_password">Password</label>
+        <span class="password-requirements">Password must be minimum of 12 characters and include 1 capital letter, 1 number, and 1 special character</span>
         <div class="password-container">
-            <input type="password" id="account_password" name="account_password" required>
+            <input type="password" id="account_password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
             <button type="button" id="showPassword">Show</button>
         </div>
-        <p class="password-requirements">Password must be minimum of 12 characters and include 1 capital letter, 1 number, and 1 special character</p>
 
         <button type="submit">Register</button>
     </form>
