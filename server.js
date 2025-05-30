@@ -53,6 +53,7 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Account routes
 app.use("/account", accountRoute)
+app.use("/register", accountRoute)
 // Inventory routes
 app.use("/inv", inventoryRoute)
 app.use("/error", errorRoute)

@@ -79,6 +79,26 @@ Util.buildVehicleDetailView = async function(data) {
     return detail
 }
 
+/* **************************************
+* Password Toggle Function
+* ************************************ */
+Util.togglePassword = function() {
+    const password = document.getElementById("account_password");
+    const showPasswordButton = document.getElementById("showPassword");
+
+    if (showPasswordButton) {
+        showPasswordButton.addEventListener("click", function() {
+            if (password.type === "password") {
+                password.type = "text";
+                showPasswordButton.textContent = "Hide";
+            } else {
+                password.type = "password";
+                showPasswordButton.textContent = "Show";
+            }
+        });
+    }
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
