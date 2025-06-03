@@ -9,6 +9,7 @@ async function buildLogin(req, res, next) {
     res.render("account/login", {
         title: "Login",
         nav,
+        errors: null,
     })
 }
 
@@ -19,6 +20,21 @@ async function buildRegister(req, res, next) {
     let nav = await utilities.getNav()
     res.render("account/register", {
         title: "Register",
+        nav,
+        errors: null,
+    })
+}
+
+/* ****************************************
+*  Process Login
+* *************************************** */
+async function processLogin(req, res) {
+    let nav = await utilities.getNav()
+    const { account_email } = req.body
+
+    req.flash("notice", "You have logged in.")
+    res.status(200).render("account/login", {
+        title: "Login",
         nav,
         errors: null,
     })
@@ -54,4 +70,4 @@ async function registerAccount(req, res) {
     }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount }
+module.exports = { buildLogin, buildRegister,processLogin, registerAccount }
