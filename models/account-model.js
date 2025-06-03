@@ -8,8 +8,10 @@ async function registerAccount(account_firstname, account_lastname, account_emai
     try {
         const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *"
         return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password])
+        return result.rowCount > 0 ? result.rows[0] : null
     } catch (error) {
-        return error.message
+        console.error("Registration error:", error)
+        return null
     }
 }
 
