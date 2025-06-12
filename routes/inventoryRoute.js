@@ -1,7 +1,7 @@
 // Needed Resources
-const addValidate = require("../utilities/inventory-validation")
+const invValidate = require("../utilities/inventory-validation")
 const express = require("express")
-const router = new express.Router() 
+const router = new express.Router()
 const invController = require("../controllers/invController")
 const utilities = require("../utilities")
 
@@ -13,9 +13,19 @@ router.get("/add-classification", utilities.handleErrors(invController.buildAddC
 
 // Route to add classification
 router.post("/add-classification",
-    addValidate.classificationRules(),
-    addValidate.checkClassData,
+    invValidate.classificationRules(),
+    invValidate.checkClassData,
     utilities.handleErrors(invController.addClassification)
+)
+
+// Route to build add inventory view
+router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory))
+
+// Route to add inventory
+router.post("/add-inventory",
+    invValidate.inventoryRules(),
+    invValidate.checkInventoryData,
+    utilities.handleErrors(invController.addInventoryItem)
 )
 
 // Route to build inventory by classification view
