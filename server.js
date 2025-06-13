@@ -5,6 +5,7 @@
 /* ***********************
  * Require Statements
  *************************/
+const cookieParser = require("cookie-parser")
 const bodyParser = require("body-parser")
 const session = require("express-session")
 const pool = require("./database/")
@@ -18,6 +19,7 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities")
 const errorRoute = require("./routes/errorRoute")
+const { cookie } = require("express-validator")
 
 /* ***********************
  * Middleware
@@ -41,6 +43,10 @@ app.use(function(req, res, next){
 // Parse URL-encoded bodies
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+// Parse cookies
+app.use(cookieParser())
+// Check JWT
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates
