@@ -9,10 +9,12 @@ const utilities = require("../utilities/")
 * *************************************** */
 async function buildAccount(req, res, next) {
     let nav = await utilities.getNav()
+    let account_firstname = res.locals.accountData.account_firstname
     res.render("account/account-management", {
         title: "Account Management",
         nav,
         errors: null,
+        account_firstname
     })
 }
 
