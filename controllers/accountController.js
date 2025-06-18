@@ -203,13 +203,18 @@ async function updatePassword(req, res) {
         hashedPassword = await bcrypt.hashSync(account_password, 10)
     } catch (error) {
         req.flash("notice", "Sorry, there was an error processing the change.")
+        // fetch data for account info when error occurs
+        const accountData = await accountModel.getAccountById(account_id)
         res.status(500).render("account/account-update", {
             title: "Edit Account",
             nav,
             errors: null,
-            account_id
+            account_firstname: accountData.account_firstname,
+            account_lastname: accountData.account_lastname,
+            account_email: accountData.account_email,
+            account_id: accountData.account_id
         })
-        return;
+        return
     }
 
     const updateResult = await accountModel.updatePassword(
@@ -222,11 +227,16 @@ async function updatePassword(req, res) {
         res.redirect("/account/")
     } else {
         req.flash("notice", "Password change failed. Please try again.")
+        // fetch data for account info when change fails
+        const accountData = await accountModel.getAccountById(account_id)
         res.status(501).render("account/account-update", {
             title: "Edit Account",
             nav,
             errors: null,
-            account_id
+            account_firstname: accountData.account_firstname,
+            account_lastname: accountData.account_lastname,
+            account_email: accountData.account_email,
+            account_id: accountData.account_id
         })
     }
 

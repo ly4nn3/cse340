@@ -214,11 +214,16 @@ validate.checkPassword = async (req, res, next) => {
     errors = validationResult(req)
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()
+        // fetch data for account info when validation fails
+        const accountData = await accountModel.getAccountById(account_id)
         res.render("account/account-update", {
             errors,
             title: "Edit Account",
             nav,
-            account_id
+            account_firstname: accountData.account_firstname,
+            account_lastname: accountData.account_lastname,
+            account_email: accountData.account_email,
+            account_id: accountData.account_id
         })
         return
     }
