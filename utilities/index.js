@@ -31,7 +31,7 @@ Util.getNav = async function (req, res, next) {
 * ************************************ */
 Util.buildClassificationGrid = async function(data){
     let grid
-    if(data.length > 0){
+    if(data && data.length > 0){
         grid = '<ul id="inv-display">'
         data.forEach(vehicle => { 
             grid += '<li>'
@@ -54,7 +54,7 @@ Util.buildClassificationGrid = async function(data){
         })
         grid += '</ul>'
     } else { 
-    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+        grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
     }
     return grid
 }
@@ -73,10 +73,14 @@ Util.buildVehicleDetailView = async function(data) {
         detail += '<p class="vehicle-description"><span class="label">Description:</span> ' + data.inv_description + '</p>'
         detail += '<p class="vehicle-miles"><span class="label">Miles:</span> ' + new Intl.NumberFormat('en-US').format(data.inv_miles) + '</p>'
         detail += '<p class="vehicle-color"><span class="label">Color:</span> ' + data.inv_color + '</p>'
+        detail += `<form action="/account/favorites/add" method="POST" class="add-favorite-form">
+            <input type="hidden" name="inv_id" value="${data.inv_id}">
+            <button type="submit" class="add-favorite">Add to Favorites</button>
+        </form>`
         detail += '</div>'
         detail += '</div>'
     } else {
-    detail = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+        detail = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
     }
     return detail
 }
@@ -121,6 +125,44 @@ Util.buildClassificationList = async function (classification_id = null) {
     })
     classificationList += "</select>"
     return classificationList
+}
+
+/* **************************************
+* Build favorites list
+* ************************************ */
+Util.buildFavoritesList = async function(data) {
+    let favoritesList = ""
+    if (data.length > 0) {
+        favoritesList = '<ul id="favorites-display">'
+        data.forEach(vehicle => {
+            favoritesList += '<li>'
+            favoritesList += '<div class="favorite-vehicle">'
+            // Vehicle image and link
+            favoritesList += `<a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+                <img src="${vehicle.inv_thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}"></a>`
+            
+            // Vehicle details
+            favoritesList += '<div class="favorite-details">'
+            favoritesList += `<h2><a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+                ${vehicle.inv_make} ${vehicle.inv_model}</a></h2>`
+            favoritesList += `<p class="favorite-price">Price: $${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</p>`
+            favoritesList += `<p>Color: ${vehicle.inv_color}</p>`
+            
+            // Remove from favorites form
+            favoritesList += `<form action="/account/favorites/delete" method="POST">
+                <input type="hidden" name="favorite_id" value="${vehicle.favorite_id}">
+                <button type="submit" class="remove-favorite">Remove from Favorites</button>
+            </form>`
+            
+            favoritesList += '</div>'
+            favoritesList += '</div>'
+            favoritesList += '</li>'
+        })
+        favoritesList += '</ul>'
+    } else {
+        favoritesList = '<p class="notice">You have no favorite vehicles.</p>'
+    }
+    return favoritesList
 }
 
 /* **************************************
