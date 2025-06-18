@@ -21,16 +21,41 @@ invCont.buildManagementView = async function (req, res, next) {
  *  Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
-  const classification_id = req.params.classificationId
-  const data = await invModel.getInventoryByClassificationId(classification_id)
-  const grid = await utilities.buildClassificationGrid(data)
-  let nav = await utilities.getNav()
-  const className = data[0].classification_name
-  res.render("./inventory/classification", {
-    title: className + " vehicles",
-    nav,
-    grid,
-  })
+  try {
+    const classification_id = req.params.classificationId
+    const data = await invModel.getInventoryByClassificationId(classification_id)
+    const grid = await utilities.buildClassificationGrid(data)
+    let nav = await utilities.getNav()
+
+    // Handle empty data / no classification found
+    if (!data || data.length === 0) {
+      const className = await invModel.getClassifications()
+      const classification = className.rows.find(row => row.classification_id == classification_id)
+      if (classification) {
+        res.render("./inventory/classification", {
+          title: classification.classification_name + " vehicles",
+          nav,
+          grid: '<p class="notice">No vehicles found in this classification.</p>',
+          errors: null,
+        })
+      } else {
+        req.flash("notice", "That classification does not exist.")
+        res.redirect("/")
+      }
+    } else {
+      const className = data[0].classification_name
+      res.render("./inventory/classification", {
+        title: className + " vehicles",
+        nav,
+        grid,
+        errors: null,
+      })
+    }
+  } catch (error) {
+    console.error("buildByClassificationId error: " + error)
+    req.flash("notice", "Sorry, we encountered an error displaying vehicles")
+    res.redirect("/")
+  }
 }
 
 /* ***************************
@@ -110,9 +135,11 @@ invCont.addInventoryItem = async function (req, res, next) {
       "notice",
       `The vehicle ${inv_make} ${inv_model} was successfully added.`
     )
+    const classificationSelect = await utilities.buildClassificationList()
     res.status(201).render("inventory/management", {
       title: "Vehicle Management",
       nav,
+      classificationSelect,
       errors: null,
     })
   } else {
@@ -146,9 +173,11 @@ invCont.addClassification = async function (req, res, next) {
   if (regResult) {
     req.flash("notice", `The ${classification_name} classification was successfully added.`)
     let nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList()
     res.status(201).render("./inventory/management", {
       title: "Vehicle Management",
       nav,
+      classificationSelect,
       errors: null,
     })
   } else {
